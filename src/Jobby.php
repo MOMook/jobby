@@ -125,6 +125,14 @@ class Jobby
         }
 
         foreach ($this->jobs as $job => $config) {
+            if (
+                isset($config['allow_shift']) &&
+                isset($config['allow_shift']['min']) &&
+                isset($config['allow_shift']['max'])
+            ) {
+                sleep(rand($config['allow_shift']['min'], $config['allow_shift']['max']));
+            }
+            
             if ($isUnix) {
                 $this->runUnix($job, $config);
             } else {
